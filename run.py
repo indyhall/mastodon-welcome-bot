@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 import pytz
 from environs import Env
 from jinja2 import Template
+import logging
+import sys
 
 class Bot(object):
     def __init__(self, access_token, since_at, instance_url, msg_template='', debug_mode=False):
@@ -14,6 +16,15 @@ class Bot(object):
         )
         self.since_at = since_at
         self.debug_mode = debug_mode
+
+        self.log = logging.getLogger()
+        if self.debug_mode:
+            self.log.setLevel(logging.DEBUG)
+        else:
+            self.log.setLevel(logging.INFO)
+
+        ch = logging.StreamHandler(sys.stdout)
+        self.log.addHandler(ch)
 
     def _should_get_msg(self, account):
         return account.url.startswith(self.instance_url) and account.created_at >= self.since_at and not account.locked
@@ -43,8 +54,9 @@ class Bot(object):
 
     def send_msg(self, account):
         msg = self.msg_template.render(account)
+        self.log.debug(msg)
         if self.debug_mode:
-            print(msg)
+            # print(msg)
             return
 
         # self.client.status_post(msg, visibility='private')
@@ -53,15 +65,14 @@ class Bot(object):
     def go(self):
         users_to_msg = self.get_users()
         if self.debug_mode:
-            print('in debug mode so not actually sending toots, but if I was, I\'d be sending to ' \
+            self.log.debug('in debug mode so not actually sending toots, but if I was, I\'d be sending to ' \
                   '{} accounts'.format(len(users_to_msg)))
-            print('Here\'s the toots that I would have been sending:')
+            self.log.debug('here\'s the toots that I would be sending:')
 
         for u in users_to_msg:
             self.send_msg(u)
 
-        if not self.debug_mode:
-            print('{} toots sent!'. format(len(users_to_msg)))
+        self.log.info('{} toots sent!'. format(len(users_to_msg)))
 
 def run():
     env = Env()
