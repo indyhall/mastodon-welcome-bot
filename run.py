@@ -7,7 +7,7 @@ import logging
 import sys
 
 class Bot(object):
-    def __init__(self, access_token, since_at, instance_url, msg_template='', debug_mode=False):
+    def __init__(self, access_token, since_at, instance_url, msg_template='', debug_mode=False, account_id=1):
         self.instance_url = instance_url
         self.msg_template = Template(msg_template)
         self.client = Mastodon(
@@ -26,8 +26,13 @@ class Bot(object):
         ch = logging.StreamHandler(sys.stdout)
         self.log.addHandler(ch)
 
+        self.account_id = account_id
+
+        self.until = pytz.utc.localize(datetime.now() - timedelta(days=1))
+        self.until = until.replace(hour=23, minute=59, second=59)
+
     def _should_get_msg(self, account):
-        return account.url.startswith(self.instance_url) and account.created_at >= self.since_at and not account.locked
+        return account.url.startswith(self.instance_url) and account.created_at >= self.since_at account.created_at <= self.until and not account.locked
 
     def get_users(self):
         users_to_msg = []
@@ -43,7 +48,7 @@ class Bot(object):
 
             return get_prev(followers)
 
-        followers = self.client.account_followers(1, limit=80)
+        followers = self.client.account_followers(self.account_id, limit=80)
         filtered = [follower for follower in followers if self._should_get_msg(follower)]
         users_to_msg.extend(filtered)
 
@@ -54,13 +59,12 @@ class Bot(object):
 
     def send_msg(self, account):
         msg = self.msg_template.render(account)
+        msg = msg.replace('\\n', '\n')
         self.log.debug(msg)
         if self.debug_mode:
-            # print(msg)
             return
 
-        # self.client.status_post(msg, visibility='private')
-
+        self.client.status_post(msg, visibility='private')
 
     def go(self):
         users_to_msg = self.get_users()
@@ -82,13 +86,15 @@ def run():
     instance_base_url = env('INSTANCE_BASE_URL')
     msg_template = env('TOOT_TEMPLATE')
     debug_mode = env.bool('DEBUG', False)
+    account_id = env.int('ACCOUNT_ID')
 
     since = pytz.utc.localize(datetime.now() - timedelta(days=days_since))
     bot = Bot(access_token,
               since_at=since,
               instance_url=instance_base_url,
               msg_template=msg_template,
-              debug_mode=debug_mode)
+              debug_mode=debug_mode,
+              account_id=account_id)
 
     bot.go()
 
