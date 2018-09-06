@@ -9,7 +9,7 @@ that is auto-followed by all new users.
 # Deploy to Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/indyhall/mastodon-welcome-bot)
-]
+
 
 Hosting the bot on Heroku is probably the easiest (and cheapest, it's free!) way to go. There's only a few steps:
 
