@@ -14,7 +14,7 @@
         "DAYS_SINCE": {
             "description": "how many days back of new users you want to send toots to",
             "required": false,
-            "value": 1
+            "value": "1"
         },
         "INSTANCE_BASE_URL": {
             "description": "the base url of the Mastodon instance you want to run this for",
@@ -27,7 +27,7 @@
         "DEBUG": {
             "description": "boolean for debug mode. toots aren't actually sent when this is true",
             "required": false,
-            "value": true
+            "value": "true"
         },
         "ACCOUNT_ID": {
             "description": "the account ID that you want to pull followers from",
