@@ -1,0 +1,37 @@
+{
+    "name": "mastodon-welcome-bot",
+    "description": "a mastodon bot that sends out welcome toots to new users",
+    "repository": "https://github.com/indyhall/mastodon-welcome-bot",
+    "keywords": ["mastodon", "social media", "welcome", "bot"],
+    "addons": [
+        { "plan": "scheduler:standard" }
+    ],
+    "env": {
+        "ACCESS_TOKEN": {
+            "description": "the access token for the Mastodon account that you want the toots to be sent from",
+            "required": true
+        },
+        "DAYS_SINCE": {
+            "description": "how many days back of new users you want to send toots to",
+            "required": false,
+            "value": 1
+        },
+        "INSTANCE_BASE_URL": {
+            "description": "the base url of the Mastodon instance you want to run this for",
+            "required": true
+        },
+        "TOOT_TEMPLATE": {
+            "description": "the template of the toot that you want to send out",
+            "required": true
+        },
+        "DEBUG": {
+            "description": "boolean for debug mode. toots aren't actually sent when this is true",
+            "required": false,
+            "value": true
+        },
+        "ACCOUNT_ID": {
+            "description": "the account ID that you want to pull followers from",
+            "required": true
+        }
+    }
+}
