@@ -29,10 +29,10 @@ class Bot(object):
         self.account_id = account_id
 
         self.until = pytz.utc.localize(datetime.now() - timedelta(days=1))
-        self.until = until.replace(hour=23, minute=59, second=59)
+        self.until = self.until.replace(hour=23, minute=59, second=59)
 
     def _should_get_msg(self, account):
-        return account.url.startswith(self.instance_url) and account.created_at >= self.since_at account.created_at <= self.until and not account.locked
+        return account.url.startswith(self.instance_url) and account.created_at >= self.since_at and account.created_at <= self.until and not account.locked
 
     def get_users(self):
         users_to_msg = []
