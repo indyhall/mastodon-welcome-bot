@@ -7,7 +7,7 @@ import logging
 import sys
 
 class Bot(object):
-    def __init__(self, access_token, since_at, instance_url, msg_template='', debug_mode=False, account_id=1):
+    def __init__(self, access_token, since_at, instance_url, msg_template='', debug_mode=True, account_id=1):
         self.instance_url = instance_url
         self.msg_template = Template(msg_template)
         self.client = Mastodon(

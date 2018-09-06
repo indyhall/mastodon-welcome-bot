@@ -1,5 +1,5 @@
 # Mastodon Welcome Bot
-This is a Mastodon bot that sends out a welcome toot to new users, brought to you by [jawns.club](https://jawns.club).  
+This is a Mastodon bot that sends out a welcome toot (DM) to new users, brought to you by [jawns.club](https://jawns.club).  
 
 Because Mastodon's API doesn't currently have a route for getting an array of accounts in an instance,
 this bot queries the followers of an account and pages through for any have been created in the 
