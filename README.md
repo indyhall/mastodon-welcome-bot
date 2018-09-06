@@ -1,6 +1,11 @@
 # Mastodon Welcome Bot
 This is a Mastodon bot that sends out a welcome toot to new users, brought to you by [jawns.club](https://jawns.club).  
 
+Because Mastodon's API doesn't currently have a route for getting an array of accounts in an instance,
+this bot queries the followers of an account and pages through for any have been created in the 
+last x days (see configuration below). This means that you'll want `ACCOUNT_ID` to be an account
+that is auto-followed by all new users.  
+
 # Installation  
 
 Requires:
@@ -29,3 +34,4 @@ The application uses the following environment variables.
 | INSTANCE_BASE_URL | yes      | n/a     | the base url of the Mastodon instance you want to run this for (ex: "https://jawns.club")                                                     |
 | TOOT_TEMPLATE     | yes      | n/a     | the template of the toot that you want to send out. Jinja2 syntax is used here and you can use any of the `Account` variables                 |
 | DEBUG             | no       | false   | boolean (either "true" or "false") for debug mode. If true, won't actually send out the toots, will just print the message for each to stdout |
+| ACCOUNT_ID        | yes      | n/a     | the account ID that you want to pull followers from |
