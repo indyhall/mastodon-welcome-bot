@@ -45,3 +45,9 @@ The application uses the following environment variables.
 | TOOT_TEMPLATE     | yes      | n/a     | the template of the toot that you want to send out. [Jinja2](http://jinja.pocoo.org/) syntax is used here and you can use any of the [`Account`](https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#account) variables                 |
 | DEBUG             | no       | false   | boolean (either "true" or "false") for debug mode. If true, won't actually send out the toots, will just print the message for each to stdout |
 | ACCOUNT_ID        | yes      | n/a     | the account ID that you want to pull followers from |
+
+### Example Welcome Toot Template 
+
+This can be copy/pasted into the TOOT_TEMPLATE environment variable. Note that `\n\n`denotes a line break, as the entire var must remain on one line. Total characters cannot exceed 500, including those line breaks. 
+
+`@{{ username }} Hi, and welcome to jawns.club!\n\nHere are a few handy tips:\n\n- This is a great (non-technical) intro to the Mastodon platform: https://bit.ly/2zk8t8c\n\n- Our "local" timeline is the real magic of jawns.club: https://bit.ly/2PDYyl3\n\n- Some less obvious ways to find people: https://bit.ly/2MMN2Xz\n\n- Install a free mobile app! Many people like Tootdon (iOS and Android).\n\n- Asking questions is okay and encouraged! We (@mods) are here to help.\n\nEnjoy :)`
