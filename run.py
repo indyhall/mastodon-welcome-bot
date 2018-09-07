@@ -64,7 +64,7 @@ class Bot(object):
         if self.debug_mode:
             return
 
-        self.client.status_post(msg, visibility='private')
+        self.client.status_post(msg, visibility='direct')
 
     def go(self):
         users_to_msg = self.get_users()
